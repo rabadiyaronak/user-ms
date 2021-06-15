@@ -68,9 +68,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails updateUser(UserDetails userDetails, Long id) {
         Optional<User> userOptional = userRepository.findById(id);
-        userOptional.orElseThrow(() -> new UserNotFound("User not found with id - " + id));
+        var userFromDb =  userOptional.orElseThrow(() -> new UserNotFound("User not found with id - " + id));
         var user = User.builder()
+                .id(id)
                 .name(userDetails.getName())
+                .email(userFromDb.getEmail())
                 .isActive(userDetails.getIsActive()).build();
         var updatedUser = userRepository.save(user);
         return UserDetails.builder()
