@@ -3,6 +3,7 @@ package com.epam.jpop.userms.controller;
 import com.epam.jpop.userms.model.UserDetails;
 import com.epam.jpop.userms.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
