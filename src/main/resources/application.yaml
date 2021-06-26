@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: user-ms
@@ -10,3 +11,9 @@ spring:
 
 server:
   port: 8082
+
+springdoc:
+  api-docs:
+    path: /user-ms/api-docs
+  swagger-ui:
+    path: /user-ms/swagger.html

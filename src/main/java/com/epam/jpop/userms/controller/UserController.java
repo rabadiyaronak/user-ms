@@ -1,6 +1,6 @@
 package com.epam.jpop.userms.controller;
 
-import com.epam.jpop.userms.model.UserDetails;
+import com.epam.jpop.userms.model.UserDetail;
 import com.epam.jpop.userms.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,24 +18,24 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserDetails> getAll() {
+    public List<UserDetail> getAll() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public UserDetails getById(@PathVariable Long id) {
+    public UserDetail getById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody UserDetails userDetails) {
-        UserDetails savedUserDetails = userService.saveUser(userDetails);
-        return ResponseEntity.created(URI.create("/api/v1/users/" + savedUserDetails.getId())).build();
+    public ResponseEntity<Void> add(@RequestBody UserDetail userDetail) {
+        UserDetail savedUserDetail = userService.saveUser(userDetail);
+        return ResponseEntity.created(URI.create("/api/v1/users/" + savedUserDetail.getId())).build();
     }
 
     @PutMapping("/{id}")
-    public UserDetails update(@RequestBody UserDetails userDetails, @PathVariable Long id) {
-        return userService.updateUser(userDetails, id);
+    public UserDetail update(@RequestBody UserDetail userDetail, @PathVariable Long id) {
+        return userService.updateUser(userDetail, id);
     }
 
     @DeleteMapping("/{id}")

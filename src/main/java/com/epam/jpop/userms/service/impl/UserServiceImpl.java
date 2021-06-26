@@ -3,7 +3,7 @@ package com.epam.jpop.userms.service.impl;
 import com.epam.jpop.userms.entity.User;
 import com.epam.jpop.userms.exception.UserAlreadyExists;
 import com.epam.jpop.userms.exception.UserNotFound;
-import com.epam.jpop.userms.model.UserDetails;
+import com.epam.jpop.userms.model.UserDetail;
 import com.epam.jpop.userms.repository.UserRepository;
 import com.epam.jpop.userms.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<UserDetails> getAllUsers() {
+    public List<UserDetail> getAllUsers() {
         var users = userRepository.findAll();
 
         return users.stream()
-                .map(user -> UserDetails.builder()
+                .map(user -> UserDetail.builder()
                         .email(user.getEmail())
                         .id(user.getId())
                         .name(user.getName())
@@ -33,10 +33,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails getUserById(Long id) {
+    public UserDetail getUserById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         var user = userOptional.orElseThrow(() -> new UserNotFound("User not found with id - " + id));
-        return UserDetails.builder()
+        return UserDetail.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
@@ -44,21 +44,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails saveUser(UserDetails userDetails) {
+    public UserDetail saveUser(UserDetail userDetail) {
 
-        var existingUser = userRepository.findByEmail(userDetails.getEmail());
+        var existingUser = userRepository.findByEmail(userDetail.getEmail());
 
         existingUser.ifPresent(user -> {
             throw new UserAlreadyExists("User with given email  is already exists");
         });
 
         var user = User.builder()
-                .email(userDetails.getEmail())
-                .name(userDetails.getName())
-                .isActive(userDetails.getIsActive()).build();
+                .email(userDetail.getEmail())
+                .name(userDetail.getName())
+                .isActive(userDetail.getIsActive()).build();
 
         var savedUser = userRepository.save(user);
-        return UserDetails.builder()
+        return UserDetail.builder()
                 .id(savedUser.getId())
                 .email(savedUser.getEmail())
                 .name(savedUser.getName())
@@ -66,16 +66,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails updateUser(UserDetails userDetails, Long id) {
+    public UserDetail updateUser(UserDetail userDetail, Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         var userFromDb =  userOptional.orElseThrow(() -> new UserNotFound("User not found with id - " + id));
         var user = User.builder()
                 .id(id)
-                .name(userDetails.getName())
+                .name(userDetail.getName())
                 .email(userFromDb.getEmail())
-                .isActive(userDetails.getIsActive()).build();
+                .isActive(userDetail.getIsActive()).build();
         var updatedUser = userRepository.save(user);
-        return UserDetails.builder()
+        return UserDetail.builder()
                 .id(updatedUser.getId())
                 .name(updatedUser.getName())
                 .email(updatedUser.getEmail())

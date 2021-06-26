@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Data
 @Builder
-public class UserDetails {
+public class UserDetail {
     private Long id;
 
     @NotBlank(message = "Name should not be null or empty")

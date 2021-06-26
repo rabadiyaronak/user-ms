@@ -1,18 +1,18 @@
 package com.epam.jpop.userms.service;
 
-import com.epam.jpop.userms.model.UserDetails;
+import com.epam.jpop.userms.model.UserDetail;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<UserDetails> getAllUsers();
+    List<UserDetail> getAllUsers();
 
-    UserDetails getUserById(Long id);
+    UserDetail getUserById(Long id);
 
-    UserDetails saveUser(UserDetails userDetails);
+    UserDetail saveUser(UserDetail userDetail);
 
-    UserDetails updateUser(UserDetails userDetails, Long id);
+    UserDetail updateUser(UserDetail userDetail, Long id);
 
     void deleteUserById(Long id);
 }
