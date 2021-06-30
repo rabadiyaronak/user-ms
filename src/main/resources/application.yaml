@@ -1,0 +1,21 @@
+
+spring:
+  application:
+    name: user-ms
+  h2:
+  console:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:h2:mem:userdb
+
+server:
+  port: 8082
+
+springdoc:
+  api-docs:
+    path: /user-ms/api-docs
+  swagger-ui:
+    path: /user-ms/swagger.html
