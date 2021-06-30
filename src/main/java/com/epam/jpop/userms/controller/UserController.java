@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -28,13 +29,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody UserDetail userDetail) {
+    public ResponseEntity<Void> add(@Valid @RequestBody UserDetail userDetail) {
         UserDetail savedUserDetail = userService.saveUser(userDetail);
         return ResponseEntity.created(URI.create("/api/v1/users/" + savedUserDetail.getId())).build();
     }
 
     @PutMapping("/{id}")
-    public UserDetail update(@RequestBody UserDetail userDetail, @PathVariable Long id) {
+    public UserDetail update(@Valid  @RequestBody UserDetail userDetail, @PathVariable Long id) {
         return userService.updateUser(userDetail, id);
     }
 
