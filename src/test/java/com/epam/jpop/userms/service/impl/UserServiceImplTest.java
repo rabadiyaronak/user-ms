@@ -127,6 +127,7 @@ class UserServiceImplTest {
         userService.deleteUserById(1L);
 
         //Then
+        Mockito.verify(userRepository, Mockito.times(1)).existsById(Mockito.anyLong());
         Mockito.verify(userRepository, Mockito.times(1)).deleteById(Mockito.anyLong());
     }
 
@@ -139,6 +140,7 @@ class UserServiceImplTest {
         userService.deleteUserById(1L);
 
         //Then
+        Mockito.verify(userRepository,Mockito.times(1)).existsById(Mockito.anyLong());
         Mockito.verify(userRepository, Mockito.never()).deleteById(Mockito.anyLong());
     }
 
